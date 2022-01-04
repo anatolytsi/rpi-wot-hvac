@@ -1,0 +1,27 @@
+{
+  "name": "rpi-wot-hvac",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anatolytsi/rpi-wot-hvac.git"
+  },
+  "author": "Anatolii Tsirkunenko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anatolytsi/rpi-wot-hvac/issues"
+  },
+  "homepage": "https://github.com/anatolytsi/rpi-wot-hvac#readme",
+  "dependencies": {
+    "@node-wot/binding-http": "^0.7.8",
+    "@node-wot/core": "^0.7.8",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.4",
+    "wot-thing-description-types": "^1.1.0-11-November-2021",
+    "wot-typescript-definitions": "^0.8.0-SNAPSHOT.21"
+  }
+}
