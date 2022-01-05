@@ -1,0 +1,91 @@
+{
+  "@context": "https://www.w3.org/2019/wot/td/v1",
+  "title": "WoTHVAC",
+  "description": "",
+  "security": "nosec_sc",
+  "securityDefinitions": {
+    "nosec_sc": {
+      "scheme": "nosec"
+    }
+  },
+  "properties": {
+    "temperature1": {
+      "description": "Read temperature 1",
+      "type": "number"
+    },
+    "temperature2": {
+      "description": "Read temperature 2",
+      "type": "number"
+    },
+    "temperature3": {
+      "description": "Read temperature 3",
+      "type": "number"
+    },
+    "temperature4": {
+      "description": "Read temperature 4",
+      "type": "number"
+    },
+    "temperature5": {
+      "description": "Read temperature 5",
+      "type": "number"
+    },
+    "valveOpened1": {
+      "description": "Check if valve 1 is opened",
+      "type": "boolean"
+    },
+    "valveClosed1": {
+      "description": "Check if valve 1 is closed",
+      "type": "boolean"
+    },
+    "valveOpened2": {
+      "description": "Check if valve 2 is opened",
+      "type": "boolean"
+    },
+    "valveClosed2": {
+      "description": "Check if valve 2 is closed",
+      "type": "boolean"
+    },
+    "valveOpened3": {
+      "description": "Check if valve 3 is opened",
+      "type": "boolean"
+    },
+    "valveClosed3": {
+      "description": "Check if valve 3 is closed",
+      "type": "boolean"
+    },
+    "valveOpened4": {
+      "description": "Check if valve 4 is opened",
+      "type": "boolean"
+    },
+    "valveClosed4": {
+      "description": "Check if valve 4 is closed",
+      "type": "boolean"
+    }
+  },
+  "actions": {
+    "openValve1": {
+      "description": "Open valve 1"
+    },
+    "closeValve1": {
+      "description": "Close valve 1"
+    },
+    "openValve2": {
+      "description": "Open valve 2"
+    },
+    "closeValve2": {
+      "description": "Close valve 2"
+    },
+    "openValve3": {
+      "description": "Open valve 3"
+    },
+    "closeValve3": {
+      "description": "Close valve 3"
+    },
+    "openValve4": {
+      "description": "Open valve 4"
+    },
+    "closeValve4": {
+      "description": "Close valve 4"
+    }
+  }
+}
