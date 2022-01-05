@@ -19,9 +19,15 @@
   "dependencies": {
     "@node-wot/binding-http": "^0.7.8",
     "@node-wot/core": "^0.7.8",
+    "ads1115": "^1.2.0",
+    "i2c-bus": "^5.2.2",
+    "node-mcp23017": "0.0.7",
     "ts-node": "^10.4.0",
     "typescript": "^4.5.4",
     "wot-thing-description-types": "^1.1.0-11-November-2021",
     "wot-typescript-definitions": "^0.8.0-SNAPSHOT.21"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.7"
   }
 }
