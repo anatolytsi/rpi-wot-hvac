@@ -10,7 +10,7 @@ export class WotHvac {
     private t2!: TSensor;
     private t3!: TSensor;
     private t4!: TSensor;
-    private t5!: TSensor;
+//    private t5!: TSensor;
     private valve1!: Valve;
     private valve2!: Valve;
     private valve3!: Valve;
@@ -23,15 +23,15 @@ export class WotHvac {
             this.td = this.thing.getThingDescription();
             let adcConfig: AdcConfigs = {
                 type: 'ads1115',
-                i2cDevice: '/dev/i2c-1',
+                i2cDevice: 1,
                 address: 0x48
             };
             this.t1 = new TSensor(adcConfig, 0);
             this.t2 = new TSensor(adcConfig, 1);
             this.t3 = new TSensor(adcConfig, 2);
             this.t4 = new TSensor(adcConfig, 3);
-            adcConfig.address = 0x49;
-            this.t5 = new TSensor(adcConfig, 0);
+  //          adcConfig.address = 0x49;
+  //          this.t5 = new TSensor(adcConfig, 0);
             let gpioConfig: GpioConfigs = {
                 type: 'mcp23017',
                 i2cDevice: '/dev/i2c-1',
@@ -75,7 +75,8 @@ export class WotHvac {
             return await this.t4.readTemperature();
         });
         this.thing.setPropertyReadHandler('temperature5', async () => {
-            return await this.t5.readTemperature();
+//            return await this.t5.readTemperature();
+              return 123;
         });
         this.thing.setPropertyReadHandler('valveOpened1', async () => {
             return await this.valve1.isOpened();
