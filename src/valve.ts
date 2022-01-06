@@ -37,7 +37,7 @@ export class Valve {
         let timeoutTime = 10000;
         let timeoutCounter = 0;
         let openTimer = setInterval(() => {
-            this.gpio.pins[this.openedPin].read(async (value: number) => {
+            this.gpio.pins[this.openedPin].read(async (value: boolean) => {
                 if (value) {
                     this.gpio.pins[this.openPin].write(0);
                     await delay(500);
@@ -59,7 +59,7 @@ export class Valve {
         let timeoutTime = 10000;
         let timeoutCounter = 0;
         let closeTimer = setInterval(() => {
-            this.gpio.pins[this.closedPin].read(async (value: number) => {
+            this.gpio.pins[this.closedPin].read(async (value: boolean) => {
                 if (value) {
                     this.gpio.pins[this.closePin].write(0);
                     await delay(500);
@@ -76,16 +76,16 @@ export class Valve {
 
     isOpened(): Promise<boolean> {
         return new Promise<boolean>((resolve => {
-            this.gpio.pins[this.openedPin].read(async (value: number) => {
-                resolve(!!value);
+            this.gpio.pins[this.openedPin].read(async (value: boolean) => {
+                resolve(value);
             })
         }))
     }
 
     isClosed(): Promise<boolean> {
         return new Promise<boolean>((resolve => {
-            this.gpio.pins[this.closedPin].read(async (value: number) => {
-                resolve(!!value);
+            this.gpio.pins[this.closedPin].read(async (value: boolean) => {
+                resolve(value);
             })
         }))
     }
