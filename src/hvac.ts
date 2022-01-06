@@ -1,6 +1,8 @@
-import {TSensor} from "./temperature_sensor";
-import {Valve} from "./valve";
-import {AdcConfigs, GpioConfigs} from "./interfaces/types";
+import {TSensor} from './temperature_sensor';
+import {Valve} from './valve';
+import {AdcConfigs, GpioConfigs} from './interfaces/types';
+
+export type OperationMode = 'manual' | 'auto';
 
 export class Hvac {
     public t1: TSensor;
@@ -12,8 +14,34 @@ export class Hvac {
     public valve2: Valve;
     public valve3: Valve;
     public valve4: Valve;
+    public mode: OperationMode;
+    private timer!: NodeJS.Timer;
 
     constructor() {
+        this.initSensors();
+        this.initValves();
+        this.setMode('auto');
+    }
+
+    public setMode(mode: OperationMode) {
+        this.mode = mode;
+        switch (mode) {
+            case 'auto':
+                this.timer = setInterval(() => this.autoMode(), 500);
+                break;
+            case 'manual':
+                clearInterval(this.timer);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private autoMode() {
+        // TODO: define auto mode
+    }
+
+    private initSensors() {
         let adcConfig: AdcConfigs = {
             type: 'ads1115',
             i2cDevice: 1,
@@ -25,6 +53,9 @@ export class Hvac {
         this.t4 = new TSensor(adcConfig, 3);
         //          adcConfig.address = 0x49;
         //          this.t5 = new TSensor(adcConfig, 0);
+    }
+
+    private initValves() {
         let gpioConfig: GpioConfigs = {
             type: 'mcp23017',
             i2cDevice: 1,
