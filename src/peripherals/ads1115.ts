@@ -30,7 +30,7 @@ export class Ads1115 implements Ads1115Config {
         if (config.bus) {
             this.bus = config.bus;
         } else {
-            this.bus = i2c.openSync(config.i2cDevice ?? '/dev/i2c-0');
+            this.bus = i2c.openPromisified(config.i2cDevice ?? 1);
         }
     }
 

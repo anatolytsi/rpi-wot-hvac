@@ -34,8 +34,8 @@ export class WotHvac {
   //          this.t5 = new TSensor(adcConfig, 0);
             let gpioConfig: GpioConfigs = {
                 type: 'mcp23017',
-                i2cDevice: '/dev/i2c-1',
-                modeA: 'INPUT',
+                i2cDevice: 1,
+                modeA: 'INPUT_PULLUP',
                 modeB: 'OUTPUT',
                 address: 0x20
             };

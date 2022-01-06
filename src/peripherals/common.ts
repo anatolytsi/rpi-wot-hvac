@@ -1,1 +1,1 @@
-export type i2cDeviceType = '/dev/i2c-0' | '/dev/i2c-1';
+export type i2cDeviceType = 0 | 1;

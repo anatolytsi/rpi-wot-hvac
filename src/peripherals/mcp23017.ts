@@ -142,11 +142,11 @@ export class Mcp23017 implements Mcp23017Config {
 
     constructor(config: Mcp23017Config) {
         this.address = config.address ?? 0x20;
-        this.i2cDevice = config.i2cDevice ?? '/dev/i2c-0';
+        this.i2cDevice = config.i2cDevice ?? 1;
         this.debug = config.debug ?? false;
         this.device = new MCP23017({
             address: this.address,
-            device: this.device,
+            device: this.i2cDevice,
             debug: this.debug
         });
         this.portA = new Mcp23017Side({device: this.device, port: 'A', mode: config.modeA});
