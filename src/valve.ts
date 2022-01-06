@@ -46,7 +46,8 @@ export class Valve {
                 timeoutCounter++;
                 if (refreshTime * timeoutCounter === timeoutTime) {
                     this.gpio.pins[this.openPin].write(0);
-                    throw Error(`Pin ${this.openedPin} did not signal "opened" state within ${timeoutTime} ms`)
+                    clearInterval(openTimer);
+                    throw Error(`Pin ${this.openedPin} did not signal "opened" state within ${timeoutTime} ms`);
                 }
             })
         }, refreshTime);
@@ -68,7 +69,8 @@ export class Valve {
                 timeoutCounter++;
                 if (refreshTime * timeoutCounter === timeoutTime) {
                     this.gpio.pins[this.closePin].write(0);
-                    throw Error(`Pin ${this.closedPin} did not signal "closed" state within ${timeoutTime} ms`)
+                    clearInterval(closeTimer);
+                    throw Error(`Pin ${this.closedPin} did not signal "closed" state within ${timeoutTime} ms`);
                 }
             })
         }, refreshTime);
