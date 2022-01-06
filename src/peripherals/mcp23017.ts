@@ -48,6 +48,7 @@ export class Mcp23017Pin implements Mcp23017PinConfig {
         }
         let toWrite = value ? this.device.HIGH : this.device.LOW;
         this.device.digitalWrite(this.num, toWrite);
+        console.log(`Set pin №${this.num}: ${toWrite}`);
         this.value = toWrite;
     }
 
@@ -67,7 +68,7 @@ export class Mcp23017Pin implements Mcp23017PinConfig {
             console.error(err);
             return
         }
-        console.log(`Pin №${this.num}: ${value}`);
+        console.log(`Read pin №${pin}: ${value}`);
         this.callback(value);
         this.value = value;
     }
