@@ -35,7 +35,8 @@ export class Ads1115 implements Ads1115Config {
     }
 
     async init() {
-        this.device = await ADS1115(this.bus, this.address);
+        this.device = await ADS1115(await this.bus, this.address);
+        this.device.gain = 1;
     }
 
     async read(channel: number): Promise<number> {
