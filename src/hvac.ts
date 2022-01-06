@@ -2,6 +2,8 @@ import {TSensor} from './temperature_sensor';
 import {Valve} from './valve';
 import {AdcConfigs, GpioConfigs} from './interfaces/types';
 
+const conf = require('../hvac.conf.json');
+
 export type OperationMode = 'manual' | 'auto';
 
 export class Hvac {
@@ -43,41 +45,29 @@ export class Hvac {
 
     private initSensors() {
         let adcConfig: AdcConfigs = {
-            type: 'ads1115',
-            i2cDevice: 1,
-            address: 0x48
+            type: conf.sensors.type,
+            i2cDevice: conf.i2cNum,
+            address: parseInt(conf.sensors.t1ToT4Addr, 16)
         };
-        this.t1 = new TSensor(adcConfig, 0);
-        this.t2 = new TSensor(adcConfig, 1);
-        this.t3 = new TSensor(adcConfig, 2);
-        this.t4 = new TSensor(adcConfig, 3);
-        //          adcConfig.address = 0x49;
-        //          this.t5 = new TSensor(adcConfig, 0);
+        this.t1 = new TSensor(adcConfig, conf.sensors.t1Channel);
+        this.t2 = new TSensor(adcConfig, conf.sensors.t2Channel);
+        this.t3 = new TSensor(adcConfig, conf.sensors.t3Channel);
+        this.t4 = new TSensor(adcConfig, conf.sensors.t4Channel);
+        // adcConfig.address = parseInt(conf.sensors.t5Addr, 16);
+        // this.t5 = new TSensor(adcConfig, conf.sensors.t5Channel);
     }
 
     private initValves() {
         let gpioConfig: GpioConfigs = {
-            type: 'mcp23017',
-            i2cDevice: 1,
-            modeA: 'INPUT_PULLUP',
-            modeB: 'OUTPUT',
-            address: 0x20
+            type: conf.valves.type,
+            i2cDevice: conf.i2cNum,
+            modeA: conf.valves.modeA,
+            modeB: conf.valves.modeB,
+            address: parseInt(conf.valves.address, 16)
         };
-        this.valve1 = new Valve(
-            {openPin: 8, closePin: 9, openedSwPin: 0, closedSwPin: 1},
-            gpioConfig
-        )
-        this.valve2 = new Valve(
-            {openPin: 10, closePin: 11, openedSwPin: 2, closedSwPin: 3},
-            gpioConfig
-        )
-        this.valve3 = new Valve(
-            {openPin: 12, closePin: 13, openedSwPin: 4, closedSwPin: 5},
-            gpioConfig
-        )
-        this.valve4 = new Valve(
-            {openPin: 14, closePin: 15, openedSwPin: 6, closedSwPin: 7},
-            gpioConfig
-        )
+        this.valve1 = new Valve(conf.valves.valve1, gpioConfig);
+        this.valve2 = new Valve(conf.valves.valve2, gpioConfig);
+        this.valve3 = new Valve(conf.valves.valve3, gpioConfig);
+        this.valve4 = new Valve(conf.valves.valve4, gpioConfig);
     }
 }

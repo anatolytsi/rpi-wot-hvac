@@ -1,0 +1,43 @@
+{
+  "i2cNum": 1,
+  "sensors": {
+    "type": "ads1115",
+    "t1ToT4Addr": "48",
+    "t1Channel": 0,
+    "t2Channel": 1,
+    "t3Channel": 2,
+    "t4Channel": 3,
+    "t5Addr": "49",
+    "t5Channel": 0
+  },
+  "valves": {
+    "type": "mcp23017",
+    "address": "20",
+    "modeA": "INPUT_PULLUP",
+    "modeB": "OUTPUT",
+    "valve1": {
+      "openPin": 8,
+      "closePin": 9,
+      "openedSwPin": 0,
+      "closedSwPin": 1
+    },
+    "valve2": {
+      "openPin": 10,
+      "closePin": 11,
+      "openedSwPin": 2,
+      "closedSwPin": 3
+    },
+    "valve3": {
+      "openPin": 12,
+      "closePin": 13,
+      "openedSwPin": 4,
+      "closedSwPin": 5
+    },
+    "valve4": {
+      "openPin": 14,
+      "closePin": 15,
+      "openedSwPin": 6,
+      "closedSwPin": 7
+    }
+  }
+}
