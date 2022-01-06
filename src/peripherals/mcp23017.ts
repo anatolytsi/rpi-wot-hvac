@@ -127,7 +127,7 @@ class Mcp23017Side implements Mcp23017SideConfig {
         let oldMode = this.mode;
         if (!oldMode.includes('INPUT')) return;
         for (const pin of this.pins) {
-            this.device.mode = mode;
+            this.device.pinMode(pin.num, this.device[mode]);
             pin.read();
         }
     }
