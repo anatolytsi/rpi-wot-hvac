@@ -1,3 +1,4 @@
+import '@node-wot/core';
 import {TSensor} from './temperature_sensor';
 import {Valve} from './valve';
 import {AdcConfigs, GpioConfigs} from "./interfaces/types";
@@ -18,7 +19,7 @@ export class WotHvac {
 
     constructor(WoT: WoT.WoT, tm: any) {
         this.WoT = WoT;
-        this.WoT.produce(tm).then((exposedThing: WoT.ExposedThing) => {
+        this.WoT.produce(tm).then(async (exposedThing: WoT.ExposedThing) => {
             this.thing = exposedThing;
             this.td = this.thing.getThingDescription();
             let adcConfig: AdcConfigs = {
@@ -58,6 +59,7 @@ export class WotHvac {
             this.addPropertyHandlers();
             this.addActionHandlers();
             this.addEventHandlers();
+            await this.thing.expose();
         })
     }
 
