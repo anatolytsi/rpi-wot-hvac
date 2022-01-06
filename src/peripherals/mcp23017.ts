@@ -59,7 +59,7 @@ export class Mcp23017Pin implements Mcp23017PinConfig {
         if (callback !== undefined) {
             this.callback = callback;
         }
-        this.device.digitalRead(this.num, this.readCallback);
+        this.device.digitalRead(this.num, this.readCallback.bind(this));
     }
 
     private readCallback(pin: any, err: any, val: boolean) {
@@ -81,14 +81,9 @@ class Mcp23017Side implements Mcp23017SideConfig {
     device: any;
 
     constructor(config: Mcp23017SideConfig) {
+        this.device = config.device;
         this.port = config.port ?? 'A';
         let mode = config.mode ?? 'INPUT';
-        if (mode.includes('INPUT')) {
-            this.setGenericInput(mode);
-        } else {
-            this.setOutput();
-        }
-        this.mode = mode;
         this.pins = [];
         if (config.pins) {
             this.pins = config.pins;
@@ -98,11 +93,16 @@ class Mcp23017Side implements Mcp23017SideConfig {
                 this.pins.push(new Mcp23017Pin({
                     device: this.device,
                     num: i + offset,
-                    mode: this.mode
+                    mode
                 }));
             }
         }
-        this.device = config.device;
+        if (mode.includes('INPUT')) {
+            this.setGenericInput(mode);
+        } else {
+            this.setOutput();
+        }
+        this.mode = mode;
     }
 
     setInput() {
