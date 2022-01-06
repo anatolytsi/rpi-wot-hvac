@@ -13,10 +13,10 @@ let usedPins: number[] = [];
 
 export class Valve {
     private gpio: GpioIf;
-    private openPin;
-    private closePin;
-    private openedPin;
-    private closedPin;
+    private openPin: number;
+    private closePin: number;
+    private openedPin: number;
+    private closedPin: number;
 
     constructor(pins: ValvePins, gpioConfig: GpioConfigs) {
         this.gpio = initGpio(gpioConfig);

@@ -19,8 +19,8 @@ const channelMux: mux[] = [
 ];
 
 export class Ads1115 implements Ads1115Config {
-    address;
-    bus;
+    address: number;
+    bus: Promise<any> | any;
     device: any;
     channels: number[];
 

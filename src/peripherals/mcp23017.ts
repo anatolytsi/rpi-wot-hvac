@@ -8,7 +8,7 @@ interface Mcp23017PinConfig {
     device: any;
     num: number;
     mode?: ModeType;
-    value?: number;
+    value?: boolean;
 }
 
 interface Mcp23017SideConfig {
@@ -27,18 +27,18 @@ export interface Mcp23017Config {
 }
 
 export class Mcp23017Pin implements Mcp23017PinConfig {
-    device;
-    num;
-    mode;
-    value;
-    callback: (value: number) => any;
+    device: any;
+    num: number;
+    mode: ModeType;
+    value: boolean;
+    callback: (value: boolean) => any;
 
     constructor(config: Mcp23017PinConfig) {
         this.device = config.device;
         this.num = config.num ?? 0;
         this.mode = config.mode ?? 'INPUT';
-        this.value = 0;
-        this.callback = (value: number) => {
+        this.value = false;
+        this.callback = (value: boolean) => {
         };
     }
 
@@ -51,17 +51,18 @@ export class Mcp23017Pin implements Mcp23017PinConfig {
         this.value = toWrite;
     }
 
-    read(callback?: (value: number) => any) {
+    read(callback?: (value: boolean) => any) {
         if (!this.mode.includes('INPUT')) {
             throw Error('Trying to read a value when pin is not set as input');
         }
-        if (callback) {
+        if (callback !== undefined) {
             this.callback = callback;
         }
         this.device.digitalRead(this.num, this.readCallback);
     }
 
-    private readCallback(err: any, value: number) {
+    private readCallback(pin: any, err: any, val: boolean) {
+        let value: boolean = this.mode === 'INPUT_PULLUP' ? !val : val;
         if (err) {
             console.error(err);
             return
@@ -73,9 +74,9 @@ export class Mcp23017Pin implements Mcp23017PinConfig {
 }
 
 class Mcp23017Side implements Mcp23017SideConfig {
-    port;
-    mode;
-    pins;
+    port: 'A' | 'B';
+    mode: ModeType;
+    pins: Mcp23017Pin[];
     device: any;
 
     constructor(config: Mcp23017SideConfig) {
