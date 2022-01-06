@@ -135,9 +135,9 @@ class Mcp23017Side implements Mcp23017SideConfig {
 }
 
 export class Mcp23017 implements Mcp23017Config {
-    address;
-    i2cDevice;
-    debug;
+    address: number;
+    i2cDevice: i2cDeviceType;
+    debug: boolean;
     portA: Mcp23017Side;
     portB: Mcp23017Side;
     private device: any;
