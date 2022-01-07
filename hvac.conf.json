@@ -2,13 +2,13 @@
   "i2cNum": 1,
   "sensors": {
     "type": "ads1115",
-    "t1ToT4Addr": "48",
-    "t1Channel": 0,
-    "t2Channel": 1,
-    "t3Channel": 2,
-    "t4Channel": 3,
-    "t5Addr": "49",
-    "t5Channel": 0
+    "heAddr": "48",
+    "he1Channel": 0,
+    "he2Channel": 1,
+    "he3Channel": 2,
+    "inOutAddr": "49",
+    "insideChannel": 0,
+    "outsideChannel": 1
   },
   "valves": {
     "type": "mcp23017",

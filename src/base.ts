@@ -21,45 +21,46 @@ export class WotHvac {
     }
 
     private addPropertyHandlers() {
-        this.thing.setPropertyReadHandler('temperature1', async () => {
-            return await this.hvac.t1.readTemperature();
+        this.thing.setPropertyReadHandler('mode', async () => {
+            return this.hvac.mode;
         });
-        this.thing.setPropertyReadHandler('temperature2', async () => {
-            return await this.hvac.t2.readTemperature();
+        this.thing.setPropertyWriteHandler('mode', async (mode) => {
+            this.hvac.mode = mode;
         });
-        this.thing.setPropertyReadHandler('temperature3', async () => {
-            return await this.hvac.t3.readTemperature();
+        this.thing.setPropertyReadHandler('temperatureFeed', async () => {
+            return this.hvac.temperatureFeed;
         });
-        this.thing.setPropertyReadHandler('temperature4', async () => {
-            return await this.hvac.t4.readTemperature();
+        this.thing.setPropertyWriteHandler('temperatureFeed', async (temp) => {
+            this.hvac.temperatureFeed = temp;
         });
-        this.thing.setPropertyReadHandler('temperature5', async () => {
-//            return await this.hvac.t5.readTemperature();
-              return 123;
+        this.thing.setPropertyReadHandler('temperatureInside', async () => {
+            // return await this.hvac.temperatureInside.readTemperature();
+            return 123;
+        });
+        this.thing.setPropertyReadHandler('temperatureOutside', async () => {
+            // return await this.hvac.temperatureOutside.readTemperature();
+            return 123;
+        });
+        this.thing.setPropertyReadHandler('temperatureHe1', async () => {
+            return await this.hvac.temperatureHe1.readTemperature();
+        });
+        this.thing.setPropertyReadHandler('temperatureHe2', async () => {
+            return await this.hvac.temperatureHe2.readTemperature();
+        });
+        this.thing.setPropertyReadHandler('temperatureHe3', async () => {
+           return await this.hvac.temperatureHe3.readTemperature();
         });
         this.thing.setPropertyReadHandler('valveOpened1', async () => {
-            return await this.hvac.valve1.isOpened();
-        });
-        this.thing.setPropertyReadHandler('valveClosed1', async () => {
-            return await this.hvac.valve1.isClosed();
+            return this.hvac.valve1.isOpened();
         });
         this.thing.setPropertyReadHandler('valveOpened2', async () => {
-            return await this.hvac.valve2.isOpened();
-        });
-        this.thing.setPropertyReadHandler('valveClosed2', async () => {
-            return await this.hvac.valve2.isClosed();
+            return this.hvac.valve2.isOpened();
         });
         this.thing.setPropertyReadHandler('valveOpened3', async () => {
-            return await this.hvac.valve3.isOpened();
-        });
-        this.thing.setPropertyReadHandler('valveClosed3', async () => {
-            return await this.hvac.valve3.isClosed();
+            return this.hvac.valve3.isOpened();
         });
         this.thing.setPropertyReadHandler('valveOpened4', async () => {
-            return await this.hvac.valve4.isOpened();
-        });
-        this.thing.setPropertyReadHandler('valveClosed4', async () => {
-            return await this.hvac.valve4.isClosed();
+            return this.hvac.valve4.isOpened();
         });
     }
 

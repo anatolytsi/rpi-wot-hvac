@@ -9,56 +9,56 @@
     }
   },
   "properties": {
-    "temperature1": {
-      "description": "Read temperature 1",
+    "mode": {
+      "description": "Control mode",
+      "type": "string",
+      "enum": ["autoSummer", "autoWinter", "manual"]
+    },
+    "hysteresis": {
+      "description": "Temperature hysteresis for auto mode",
+      "type": "number",
+      "minimum": 0,
+      "maximum": 10,
+      "multipleOf": 0.5
+    },
+    "temperatureFeed": {
+      "description": "Temperature to feed to the system for auto mode",
       "type": "number"
     },
-    "temperature2": {
-      "description": "Read temperature 2",
+    "temperatureInside": {
+      "description": "Inside hall temperature",
       "type": "number"
     },
-    "temperature3": {
-      "description": "Read temperature 3",
+    "temperatureOutside": {
+      "description": "Outside temperature",
       "type": "number"
     },
-    "temperature4": {
-      "description": "Read temperature 4",
+    "temperatureHe1": {
+      "description": "Heat exchanger 1 temperature",
       "type": "number"
     },
-    "temperature5": {
-      "description": "Read temperature 5",
+    "temperatureHe2": {
+      "description": "Heat exchanger 2 temperature",
+      "type": "number"
+    },
+    "temperatureHe3": {
+      "description": "Heat exchanger 3 temperature",
       "type": "number"
     },
     "valveOpened1": {
       "description": "Check if valve 1 is opened",
       "type": "boolean"
     },
-    "valveClosed1": {
-      "description": "Check if valve 1 is closed",
-      "type": "boolean"
-    },
     "valveOpened2": {
       "description": "Check if valve 2 is opened",
-      "type": "boolean"
-    },
-    "valveClosed2": {
-      "description": "Check if valve 2 is closed",
       "type": "boolean"
     },
     "valveOpened3": {
       "description": "Check if valve 3 is opened",
       "type": "boolean"
     },
-    "valveClosed3": {
-      "description": "Check if valve 3 is closed",
-      "type": "boolean"
-    },
     "valveOpened4": {
       "description": "Check if valve 4 is opened",
-      "type": "boolean"
-    },
-    "valveClosed4": {
-      "description": "Check if valve 4 is closed",
       "type": "boolean"
     }
   },

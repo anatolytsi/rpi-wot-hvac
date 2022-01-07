@@ -31,64 +31,70 @@ export class Valve {
     }
 
     open() {
-        this.gpio.pins[this.closePin].write(0);
-        this.gpio.pins[this.openPin].write(1);
-        let refreshTime = 200;
-        let timeoutTime = 10000;
-        let timeoutCounter = 0;
-        let openTimer = setInterval(() => {
-            this.gpio.pins[this.openedPin].read(async (value: boolean) => {
-                if (value) {
-                    this.gpio.pins[this.openPin].write(0);
-                    await delay(500);
-                    clearInterval(openTimer);
-                }
-                timeoutCounter++;
-                if (refreshTime * timeoutCounter === timeoutTime) {
-                    this.gpio.pins[this.openPin].write(0);
-                    clearInterval(openTimer);
-                    throw Error(`Pin ${this.openedPin} did not signal "opened" state within ${timeoutTime} ms`);
-                }
-            })
-        }, refreshTime);
+        this.isOpened().then(value => {
+            if (value) return;
+            this.gpio.pins[this.closePin].write(0);
+            this.gpio.pins[this.openPin].write(1);
+            let refreshTime = 200;
+            let timeoutTime = 10000;
+            let timeoutCounter = 0;
+            let openTimer = setInterval(() => {
+                this.isOpened().then(async (value: boolean) => {
+                    if (value) {
+                        this.gpio.pins[this.openPin].write(0);
+                        await delay(500);
+                        clearInterval(openTimer);
+                    }
+                    timeoutCounter++;
+                    if (refreshTime * timeoutCounter === timeoutTime) {
+                        this.gpio.pins[this.openPin].write(0);
+                        clearInterval(openTimer);
+                        throw Error(`Pin ${this.openedPin} did not signal "opened" state within ${timeoutTime} ms`);
+                    }
+                })
+            }, refreshTime);
+        });
     }
 
     close() {
-        this.gpio.pins[this.closePin].write(1);
-        this.gpio.pins[this.openPin].write(0);
-        let refreshTime = 200;
-        let timeoutTime = 10000;
-        let timeoutCounter = 0;
-        let closeTimer = setInterval(() => {
-            this.gpio.pins[this.closedPin].read(async (value: boolean) => {
-                if (value) {
-                    this.gpio.pins[this.closePin].write(0);
-                    await delay(500);
-                    clearInterval(closeTimer);
-                }
-                timeoutCounter++;
-                if (refreshTime * timeoutCounter === timeoutTime) {
-                    this.gpio.pins[this.closePin].write(0);
-                    clearInterval(closeTimer);
-                    throw Error(`Pin ${this.closedPin} did not signal "closed" state within ${timeoutTime} ms`);
-                }
-            })
-        }, refreshTime);
+        this.isClosed().then(value => {
+            if (value) return;
+            this.gpio.pins[this.closePin].write(1);
+            this.gpio.pins[this.openPin].write(0);
+            let refreshTime = 200;
+            let timeoutTime = 10000;
+            let timeoutCounter = 0;
+            let closeTimer = setInterval(() => {
+                this.isClosed().then(async (value: boolean) => {
+                    if (value) {
+                        this.gpio.pins[this.closePin].write(0);
+                        await delay(500);
+                        clearInterval(closeTimer);
+                    }
+                    timeoutCounter++;
+                    if (refreshTime * timeoutCounter === timeoutTime) {
+                        this.gpio.pins[this.closePin].write(0);
+                        clearInterval(closeTimer);
+                        throw Error(`Pin ${this.closedPin} did not signal "closed" state within ${timeoutTime} ms`);
+                    }
+                })
+            }, refreshTime);
+        });
     }
 
     isOpened(): Promise<boolean> {
-        return new Promise<boolean>((resolve => {
+        return new Promise<boolean>(resolve => {
             this.gpio.pins[this.openedPin].read(async (value: boolean) => {
                 resolve(value);
             })
-        }))
+        })
     }
 
     isClosed(): Promise<boolean> {
-        return new Promise<boolean>((resolve => {
+        return new Promise<boolean>(resolve => {
             this.gpio.pins[this.closedPin].read(async (value: boolean) => {
                 resolve(value);
             })
-        }))
+        })
     }
 }
