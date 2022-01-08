@@ -38,7 +38,7 @@ export class TSensor implements TSensorConfig {
         let log = Math.log(this.adcMax / adcValue - 1);
         let temperature: number = Math.round((1.0 / (1.0 / this.t0 + log / this.beta) - 273.15) * 100) / 100;
         this._temperature = temperature;
-        console.log(`Temperature is ${temperature}, ADC value is ${adcValue}, Voltage is ${volts}`);
+        // console.log(`Temperature is ${temperature}, ADC value is ${adcValue}, Voltage is ${volts}`);
         return temperature;
     }
 }
