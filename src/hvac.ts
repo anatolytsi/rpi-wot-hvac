@@ -20,72 +20,78 @@ export class Hvac {
     public mode: OperationMode;
     public hysteresis: number;
     private timer!: NodeJS.Timer;
+    private workerCallback: () => void;
 
     constructor() {
         this.temperatureFeed = 0;
         this.hysteresis = 0;
+        this.workerCallback = async () => {};
         this.initSensors();
         this.initValves();
         this.setMode('manual');
+        this.timer = setInterval(async () => {
+            await this.timerMainCallback()
+        }, 500);
     }
 
     public setMode(mode: OperationMode) {
         this.mode = mode;
         switch (mode) {
             case 'autoWinter':
-                this.timer = setInterval(async () => this.autoWinterMode(), 5000);
+                this.workerCallback = this.autoWinterMode;
                 break;
             case 'autoSummer':
-                this.timer = setInterval(async () => this.autoSummerMode(), 5000);
+                this.workerCallback = this.autoSummerMode;
                 break;
             case 'manual':
-                clearInterval(this.timer);
+                this.workerCallback = async () => {};
                 break;
             default:
                 break;
         }
     }
 
+    private async timerMainCallback() {
+        // await this.temperatureInside.readTemperature();
+        // await this.temperatureOutside.readTemperature();
+        await this.temperatureHe1.readTemperature();
+        await this.temperatureHe2.readTemperature();
+        await this.temperatureHe3.readTemperature();
+        await this.workerCallback();
+    }
+
     private async commonCycle() {
-        this.temperatureHe1.readTemperature().then((temperature) => {
-            if (temperature >= (this.temperatureFeed + this.hysteresis)) {
-                this.valve1.close();
-            } else if (temperature < this.temperatureFeed - this.hysteresis) {
-                this.valve1.open();
-            }
-        });
-        this.temperatureHe2.readTemperature().then((temperature) => {
-            if (temperature >= (this.temperatureFeed + this.hysteresis)) {
-                this.valve2.close();
-            } else if (temperature < this.temperatureFeed - this.hysteresis) {
-                this.valve2.open();
-            }
-        });
+        if (this.temperatureHe1.temperature >= (this.temperatureFeed + this.hysteresis)) {
+            this.valve1.close();
+        } else if (this.temperatureHe1.temperature < this.temperatureFeed - this.hysteresis) {
+            this.valve1.open();
+        }
+        if (this.temperatureHe2.temperature >= (this.temperatureFeed + this.hysteresis)) {
+            this.valve2.close();
+        } else if (this.temperatureHe2.temperature < this.temperatureFeed - this.hysteresis) {
+            this.valve2.open();
+        }
     }
 
     private async autoSummerMode() {
         this.commonCycle();
         this.valve4.open();
-        this.temperatureHe3.readTemperature().then((temperature) => {
-            if (temperature >= (this.temperatureFeed + this.hysteresis)) {
-                this.valve3.close();
-            } else if (temperature < this.temperatureFeed - this.hysteresis) {
-                this.valve3.open();
-            }
-        });
+        if (this.temperatureHe3.temperature >= (this.temperatureFeed + this.hysteresis)) {
+            this.valve3.close();
+        } else if (this.temperatureHe3.temperature < this.temperatureFeed - this.hysteresis) {
+            this.valve3.open();
+        }
     }
 
     private async autoWinterMode() {
         this.commonCycle();
-        this.temperatureHe3.readTemperature().then((temperature) => {
-            if (temperature >= (this.temperatureFeed + this.hysteresis)) {
-                this.valve3.open();
-                this.valve4.open();
-            } else if (temperature < this.temperatureFeed - this.hysteresis) {
-                this.valve3.open();
-                this.valve4.close();
-            }
-        });
+        if (this.temperatureHe3.temperature >= (this.temperatureFeed + this.hysteresis)) {
+            this.valve3.open();
+            this.valve4.open();
+        } else if (this.temperatureHe3.temperature < this.temperatureFeed - this.hysteresis) {
+            this.valve3.open();
+            this.valve4.close();
+        }
     }
 
     private initSensors() {
