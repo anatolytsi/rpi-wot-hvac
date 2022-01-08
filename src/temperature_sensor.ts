@@ -18,7 +18,7 @@ export class TSensor implements TSensorConfig {
     private _temperature: number;
 
     constructor(adcConfig: AdcConfigs, channel: number, t0: number = 298.15,
-                beta: number = 3435, adcMax: number = 32767) {
+                beta: number = 3950, adcMax: number = 65535) {
         this.adc = initAdc(adcConfig);
         this.channel = channel;
         this.t0 = t0;
