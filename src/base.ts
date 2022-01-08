@@ -68,16 +68,16 @@ export class WotHvac {
             return this.hvac.temperatureHe3.temperature;
         });
         this.thing.setPropertyReadHandler('valveOpened1', async () => {
-            return this.hvac.valve1.isOpened();
+            return this.hvac.valve1.opened;
         });
         this.thing.setPropertyReadHandler('valveOpened2', async () => {
-            return this.hvac.valve2.isOpened();
+            return this.hvac.valve2.opened;
         });
         this.thing.setPropertyReadHandler('valveOpened3', async () => {
-            return this.hvac.valve3.isOpened();
+            return this.hvac.valve3.opened;
         });
         this.thing.setPropertyReadHandler('valveOpened4', async () => {
-            return this.hvac.valve4.isOpened();
+            return this.hvac.valve4.opened;
         });
     }
 
