@@ -8,7 +8,7 @@ export function initAdc(adcConfig: AdcConfigs): AdcIf {
     if (adcConfigs.includes(adcConfig)) {
         return adcInstances[adcConfigs.indexOf(adcConfig)];
     }
-    adcConfigs.push(adcConfig);
+    adcConfigs.push({...adcConfig});
     let adc = new AdcIf(adcConfig);
     adcInstances.push(adc);
     return adc;
