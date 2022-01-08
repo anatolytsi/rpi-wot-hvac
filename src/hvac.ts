@@ -1,10 +1,19 @@
 import {TSensor} from './temperature_sensor';
 import {Valve} from './valve';
 import {AdcConfigs, GpioConfigs} from './interfaces/types';
+import * as fs from "fs";
 
 const conf = require('../hvac.conf.json');
 
 export type OperationMode = 'manual' | 'autoWinter' | 'autoSummer';
+
+type SaveFileType = {
+    temperatureFeed: number;
+    mode: OperationMode;
+    hysteresis: number;
+}
+
+const SAVE_FILE_NAME = 'state.dump.json';
 
 export class Hvac {
     public temperatureFeed: number;
@@ -29,9 +38,11 @@ export class Hvac {
         this.initSensors();
         this.initValves();
         this.setMode('manual');
+        this.readState();
         this.timer = setInterval(async () => {
             await this.timerMainCallback()
-        }, 500);
+        }, 1000);
+        setInterval(async () => {await this.dumpState()}, 60000);
     }
 
     public setMode(mode: OperationMode) {
@@ -49,6 +60,30 @@ export class Hvac {
             default:
                 break;
         }
+    }
+
+    private readState() {
+        fs.readFile(SAVE_FILE_NAME, (err, data) => {
+            if (err){
+                console.error(err);
+            } else {
+                // @ts-ignore
+                let save: SaveFileType = JSON.parse(data);
+                this.temperatureFeed = save.temperatureFeed;
+                this.hysteresis = save.hysteresis;
+                this.setMode(save.mode);
+            }
+        })
+    }
+
+    private async dumpState() {
+        let saveFile: SaveFileType = {
+            temperatureFeed: this.temperatureFeed,
+            mode: this.mode,
+            hysteresis: this.hysteresis
+        }
+        let json = JSON.stringify(saveFile, null, 2);
+        fs.writeFile(SAVE_FILE_NAME, json, () => {});
     }
 
     private async timerMainCallback() {
