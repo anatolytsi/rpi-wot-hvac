@@ -53,12 +53,10 @@ export class WotHvac {
             this.hvac.temperatureFeed = temp;
         });
         this.thing.setPropertyReadHandler('temperatureInside', async () => {
-            // return this.hvac.temperatureInside.temperature;
-            return 123;
+            return this.hvac.temperatureInside.temperature;
         });
         this.thing.setPropertyReadHandler('temperatureOutside', async () => {
-            // return this.hvac.temperatureOutside.temperature;
-            return 123;
+            return this.hvac.temperatureOutside.temperature;
         });
         this.thing.setPropertyReadHandler('temperatureHe1', async () => {
             return this.hvac.temperatureHe1.temperature;

@@ -88,8 +88,8 @@ export class Hvac {
     }
 
     private async timerMainCallback() {
-        // await this.temperatureInside.readTemperature();
-        // await this.temperatureOutside.readTemperature();
+        await this.temperatureInside.readTemperature();
+        await this.temperatureOutside.readTemperature();
         await this.temperatureHe1.readTemperature();
         await this.temperatureHe2.readTemperature();
         await this.temperatureHe3.readTemperature();
@@ -148,9 +148,9 @@ export class Hvac {
         this.temperatureHe1 = new TSensor(adcConfig, conf.sensors.he1Channel);
         this.temperatureHe2 = new TSensor(adcConfig, conf.sensors.he2Channel);
         this.temperatureHe3 = new TSensor(adcConfig, conf.sensors.he3Channel);
-        // adcConfig.address = parseInt(conf.sensors.inOutAddr, 16);
-        // this.temperatureInside = new TSensor(adcConfig, conf.sensors.insideChannel);
-        // this.temperatureOutside = new TSensor(adcConfig, conf.sensors.outsideChannel);
+        adcConfig.address = parseInt(conf.sensors.inOutAddr, 16);
+        this.temperatureInside = new TSensor(adcConfig, conf.sensors.insideChannel);
+        this.temperatureOutside = new TSensor(adcConfig, conf.sensors.outsideChannel);
     }
 
     private initValves() {
