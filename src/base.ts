@@ -38,7 +38,7 @@ export class WotHvac {
             return this.hvac.mode;
         });
         this.thing.setPropertyWriteHandler('mode', async (mode) => {
-            this.hvac.mode = mode;
+            this.hvac.setMode(mode);
         });
         this.thing.setPropertyReadHandler('hysteresis', async () => {
             return this.hvac.hysteresis;
