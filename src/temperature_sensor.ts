@@ -15,6 +15,7 @@ export class TSensor implements TSensorConfig {
     t0: number;
     beta: number;
     adcMax: number;
+    private _temperature: number;
 
     constructor(adcConfig: AdcConfigs, channel: number, t0: number = 298.15,
                 beta: number = 3435, adcMax: number = 32767) {
@@ -25,6 +26,10 @@ export class TSensor implements TSensorConfig {
         this.adcMax = adcMax;
     }
 
+    public get temperature() {
+        return this._temperature;
+    }
+
     async readTemperature(): Promise<number> {
         let adcValue: number = await this.adc.read(this.channel)
         adcValue = adcValue & 0x8000 ? - (adcValue & 0x7FF) : adcValue;
@@ -32,6 +37,7 @@ export class TSensor implements TSensorConfig {
         adcValue = adcValue < 0 ? 0 : adcValue;
         let log = Math.log(this.adcMax / adcValue - 1);
         let temperature: number = Math.round((1.0 / (1.0 / this.t0 + log / this.beta) - 273.15) * 100) / 100;
+        this._temperature = temperature;
         console.log(`Temperature is ${temperature}, ADC value is ${adcValue}, Voltage is ${volts}`);
         return temperature;
     }

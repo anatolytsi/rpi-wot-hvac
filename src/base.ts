@@ -34,21 +34,21 @@ export class WotHvac {
             this.hvac.temperatureFeed = temp;
         });
         this.thing.setPropertyReadHandler('temperatureInside', async () => {
-            // return await this.hvac.temperatureInside.readTemperature();
+            // return this.hvac.temperatureInside.temperature;
             return 123;
         });
         this.thing.setPropertyReadHandler('temperatureOutside', async () => {
-            // return await this.hvac.temperatureOutside.readTemperature();
+            // return this.hvac.temperatureOutside.temperature;
             return 123;
         });
         this.thing.setPropertyReadHandler('temperatureHe1', async () => {
-            return await this.hvac.temperatureHe1.readTemperature();
+            return this.hvac.temperatureHe1.temperature;
         });
         this.thing.setPropertyReadHandler('temperatureHe2', async () => {
-            return await this.hvac.temperatureHe2.readTemperature();
+            return this.hvac.temperatureHe2.temperature;
         });
         this.thing.setPropertyReadHandler('temperatureHe3', async () => {
-           return await this.hvac.temperatureHe3.readTemperature();
+           return this.hvac.temperatureHe3.temperature;
         });
         this.thing.setPropertyReadHandler('valveOpened1', async () => {
             return this.hvac.valve1.isOpened();
