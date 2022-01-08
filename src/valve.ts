@@ -19,8 +19,14 @@ export class Valve {
     private openedPin: number;
     private closedPin: number;
     private working: boolean;
+    private refreshTime: number;
+    private timeoutTime: number;
+    private timeoutCounter: number;
 
     constructor(pins: ValvePins, gpioConfig: GpioConfigs) {
+        this.refreshTime = 1000;
+        this.timeoutTime = 10000;
+        this.timeoutCounter = 0;
         this.opened = false;
         this.working = false;
         this.gpio = initGpio(gpioConfig);
@@ -41,9 +47,6 @@ export class Valve {
             this.working = true;
             this.gpio.pins[this.closePin].write(0);
             this.gpio.pins[this.openPin].write(1);
-            let refreshTime = 1000;
-            let timeoutTime = 10000;
-            let timeoutCounter = 0;
             let openTimer = setInterval(() => {
                 this.isOpened().then(async (value: boolean) => {
                     if (value) {
@@ -53,16 +56,16 @@ export class Valve {
                         this.working = false;
                         clearInterval(openTimer);
                     }
-                    timeoutCounter++;
-                    if (refreshTime * timeoutCounter === timeoutTime) {
+                    this.timeoutCounter++;
+                    if (this.refreshTime * this.timeoutCounter === this.timeoutTime) {
                         this.opened = true;
                         this.gpio.pins[this.openPin].write(0);
                         this.working = false;
                         clearInterval(openTimer);
-                        throw Error(`Pin ${this.openedPin} did not signal "opened" state within ${timeoutTime} ms`);
+                        throw Error(`Pin ${this.openedPin} did not signal "opened" state within ${this.timeoutTime} ms`);
                     }
                 })
-            }, refreshTime);
+            }, this.refreshTime);
         });
     }
 
@@ -73,9 +76,6 @@ export class Valve {
             this.working = true;
             this.gpio.pins[this.closePin].write(1);
             this.gpio.pins[this.openPin].write(0);
-            let refreshTime = 1000;
-            let timeoutTime = 10000;
-            let timeoutCounter = 0;
             let closeTimer = setInterval(() => {
                 this.isClosed().then(async (value: boolean) => {
                     if (value) {
@@ -85,16 +85,16 @@ export class Valve {
                         this.working = false;
                         clearInterval(closeTimer);
                     }
-                    timeoutCounter++;
-                    if (refreshTime * timeoutCounter === timeoutTime) {
+                    this.timeoutCounter++;
+                    if (this.refreshTime * this.timeoutCounter === this.timeoutTime) {
                         this.opened = false;
                         this.gpio.pins[this.closePin].write(0);
                         this.working = false;
                         clearInterval(closeTimer);
-                        throw Error(`Pin ${this.closedPin} did not signal "closed" state within ${timeoutTime} ms`);
+                        throw Error(`Pin ${this.closedPin} did not signal "closed" state within ${this.timeoutTime} ms`);
                     }
                 })
-            }, refreshTime);
+            }, this.refreshTime);
         });
     }
 
