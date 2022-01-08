@@ -1,11 +1,13 @@
 {
   "@context": "https://www.w3.org/2019/wot/td/v1",
+  "id": "wothvac",
   "title": "WoTHVAC",
   "description": "",
-  "security": "nosec_sc",
+  "security": "basic_sc",
   "securityDefinitions": {
-    "nosec_sc": {
-      "scheme": "nosec"
+    "basic_sc": {
+      "in": "header",
+      "scheme": "basic"
     }
   },
   "properties": {
@@ -64,28 +66,89 @@
   },
   "actions": {
     "openValve1": {
-      "description": "Open valve 1"
+      "description": "Open valve 1",
+      "input": {
+        "description": "Auth token",
+        "type": "string"
+      }
     },
     "closeValve1": {
-      "description": "Close valve 1"
+      "description": "Close valve 1",
+      "input": {
+        "description": "Auth token",
+        "type": "string"
+      }
     },
     "openValve2": {
-      "description": "Open valve 2"
+      "description": "Open valve 2",
+      "input": {
+        "description": "Auth token",
+        "type": "string"
+      }
     },
     "closeValve2": {
-      "description": "Close valve 2"
+      "description": "Close valve 2",
+      "input": {
+        "description": "Auth token",
+        "type": "string"
+      }
     },
     "openValve3": {
-      "description": "Open valve 3"
+      "description": "Open valve 3",
+      "input": {
+        "description": "Auth token",
+        "type": "string"
+      }
     },
     "closeValve3": {
-      "description": "Close valve 3"
+      "description": "Close valve 3",
+      "input": {
+        "description": "Auth token",
+        "type": "string"
+      }
     },
     "openValve4": {
-      "description": "Open valve 4"
+      "description": "Open valve 4",
+      "input": {
+        "description": "Auth token",
+        "type": "string"
+      }
     },
     "closeValve4": {
-      "description": "Close valve 4"
+      "description": "Close valve 4",
+      "input": {
+        "description": "Auth token",
+        "type": "string"
+      }
+    },
+    "authenticate": {
+      "description": "Authenticates user",
+      "input": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "token": {
+            "type": "string"
+          }
+        }
+      },
+      "output": {
+        "description": "Auth token and superuser status",
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string"
+          },
+          "isSu": {
+            "type": "boolean"
+          }
+        }
+      }
     }
   }
 }
