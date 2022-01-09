@@ -1,0 +1,154 @@
+{
+  "@context": "https://www.w3.org/2019/wot/td/v1",
+  "id": "wothvac",
+  "title": "WoTHVAC",
+  "description": "",
+  "security": "basic_sc",
+  "securityDefinitions": {
+    "basic_sc": {
+      "in": "header",
+      "scheme": "basic"
+    }
+  },
+  "properties": {
+    "mode": {
+      "description": "Control mode",
+      "type": "string",
+      "enum": ["autoSummer", "autoWinter", "manual"]
+    },
+    "hysteresis": {
+      "description": "Temperature hysteresis for auto mode",
+      "type": "number",
+      "minimum": 0,
+      "maximum": 10,
+      "multipleOf": 0.5
+    },
+    "temperatureFeed": {
+      "description": "Temperature to feed to the system for auto mode",
+      "type": "number"
+    },
+    "temperatureInside": {
+      "description": "Inside hall temperature",
+      "type": "number"
+    },
+    "temperatureOutside": {
+      "description": "Outside temperature",
+      "type": "number"
+    },
+    "temperatureHe1": {
+      "description": "Heat exchanger 1 temperature",
+      "type": "number"
+    },
+    "temperatureHe2": {
+      "description": "Heat exchanger 2 temperature",
+      "type": "number"
+    },
+    "temperatureHe3": {
+      "description": "Heat exchanger 3 temperature",
+      "type": "number"
+    },
+    "valveOpened1": {
+      "description": "Check if valve 1 is opened",
+      "type": "boolean"
+    },
+    "valveOpened2": {
+      "description": "Check if valve 2 is opened",
+      "type": "boolean"
+    },
+    "valveOpened3": {
+      "description": "Check if valve 3 is opened",
+      "type": "boolean"
+    },
+    "valveOpened4": {
+      "description": "Check if valve 4 is opened",
+      "type": "boolean"
+    }
+  },
+  "actions": {
+    "openValve1": {
+      "description": "Open valve 1",
+      "input": {
+        "description": "Auth token",
+        "type": "string"
+      }
+    },
+    "closeValve1": {
+      "description": "Close valve 1",
+      "input": {
+        "description": "Auth token",
+        "type": "string"
+      }
+    },
+    "openValve2": {
+      "description": "Open valve 2",
+      "input": {
+        "description": "Auth token",
+        "type": "string"
+      }
+    },
+    "closeValve2": {
+      "description": "Close valve 2",
+      "input": {
+        "description": "Auth token",
+        "type": "string"
+      }
+    },
+    "openValve3": {
+      "description": "Open valve 3",
+      "input": {
+        "description": "Auth token",
+        "type": "string"
+      }
+    },
+    "closeValve3": {
+      "description": "Close valve 3",
+      "input": {
+        "description": "Auth token",
+        "type": "string"
+      }
+    },
+    "openValve4": {
+      "description": "Open valve 4",
+      "input": {
+        "description": "Auth token",
+        "type": "string"
+      }
+    },
+    "closeValve4": {
+      "description": "Close valve 4",
+      "input": {
+        "description": "Auth token",
+        "type": "string"
+      }
+    },
+    "authenticate": {
+      "description": "Authenticates user",
+      "input": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "token": {
+            "type": "string"
+          }
+        }
+      },
+      "output": {
+        "description": "Auth token and superuser status",
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string"
+          },
+          "isSu": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
+}
