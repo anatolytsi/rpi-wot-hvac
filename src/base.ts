@@ -1,18 +1,8 @@
 import '@node-wot/core';
 import {Hvac} from './hvac';
+import * as path from 'path';
 
-require('dotenv').config()
-
-
-let crypto = require('crypto');
-
-const usernameHash = crypto.createHash('md5').update(process.env.USERNAME).digest('hex');
-const passwordHash = crypto.createHash('md5').update(process.env.PASSWORD).digest('hex');
-const usernameSuHash = crypto.createHash('md5').update(process.env.SU_USERNAME).digest('hex');
-const passwordSuHash = crypto.createHash('md5').update(process.env.SU_PASSWORD).digest('hex');
-
-const tokenHash = `${usernameHash}${passwordHash}`
-const suTokenHash = `${usernameSuHash}${passwordSuHash}`
+require('dotenv').config({path: path.join(__dirname, '../', '.env')})
 
 export class WotHvac {
     public thing!: WoT.ExposedThing;
@@ -82,50 +72,30 @@ export class WotHvac {
     }
 
     private addActionHandlers() {
-        this.thing.setActionHandler('openValve1', async (token) => {
-            if (token !== suTokenHash) return;
+        this.thing.setActionHandler('openValve1', async () => {
             return this.hvac.valve1.open();
         });
-        this.thing.setActionHandler('closeValve1', async (token) => {
-            if (token !== suTokenHash) return;
+        this.thing.setActionHandler('closeValve1', async () => {
             return this.hvac.valve1.close();
         });
-        this.thing.setActionHandler('openValve2', async (token) => {
-            if (token !== suTokenHash) return;
+        this.thing.setActionHandler('openValve2', async () => {
             return this.hvac.valve2.open();
         });
-        this.thing.setActionHandler('closeValve2', async (token) => {
-            if (token !== suTokenHash) return;
+        this.thing.setActionHandler('closeValve2', async () => {
             return this.hvac.valve2.close();
         });
-        this.thing.setActionHandler('openValve3', async (token) => {
-            if (token !== suTokenHash) return;
+        this.thing.setActionHandler('openValve3', async () => {
             return this.hvac.valve3.open();
         });
-        this.thing.setActionHandler('closeValve3', async (token) => {
-            if (token !== suTokenHash) return;
+        this.thing.setActionHandler('closeValve3', async () => {
             return this.hvac.valve3.close();
         });
-        this.thing.setActionHandler('openValve4', async (token) => {
-            if (token !== suTokenHash) return;
+        this.thing.setActionHandler('openValve4', async () => {
             return this.hvac.valve4.open();
         });
-        this.thing.setActionHandler('closeValve4', async (token) => {
-            if (token !== suTokenHash) return;
+        this.thing.setActionHandler('closeValve4', async () => {
             return this.hvac.valve4.close();
         });
-        this.thing.setActionHandler('authenticate', async ({username, password, token}) => {
-            if (token) {
-                if (token === tokenHash) return {token, isSu: false};
-                if (token === suTokenHash) return {token, isSu: true};
-            }
-            if (username === process.env.USERNAME && password === process.env.PASSWORD) {
-                return {token: tokenHash, isSu: false}
-            } else if (username === process.env.SU_USERNAME && password === process.env.SU_PASSWORD) {
-                return {token: suTokenHash, isSu: true}
-            }
-            return {token: '', isSu: false};
-        })
     }
 
     private addEventHandlers() {

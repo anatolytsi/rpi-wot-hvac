@@ -66,89 +66,28 @@
   },
   "actions": {
     "openValve1": {
-      "description": "Open valve 1",
-      "input": {
-        "description": "Auth token",
-        "type": "string"
-      }
+      "description": "Open valve 1"
     },
     "closeValve1": {
-      "description": "Close valve 1",
-      "input": {
-        "description": "Auth token",
-        "type": "string"
-      }
+      "description": "Close valve 1"
     },
     "openValve2": {
-      "description": "Open valve 2",
-      "input": {
-        "description": "Auth token",
-        "type": "string"
-      }
+      "description": "Open valve 2"
     },
     "closeValve2": {
-      "description": "Close valve 2",
-      "input": {
-        "description": "Auth token",
-        "type": "string"
-      }
+      "description": "Close valve 2"
     },
     "openValve3": {
-      "description": "Open valve 3",
-      "input": {
-        "description": "Auth token",
-        "type": "string"
-      }
+      "description": "Open valve 3"
     },
     "closeValve3": {
-      "description": "Close valve 3",
-      "input": {
-        "description": "Auth token",
-        "type": "string"
-      }
+      "description": "Close valve 3"
     },
     "openValve4": {
-      "description": "Open valve 4",
-      "input": {
-        "description": "Auth token",
-        "type": "string"
-      }
+      "description": "Open valve 4"
     },
     "closeValve4": {
-      "description": "Close valve 4",
-      "input": {
-        "description": "Auth token",
-        "type": "string"
-      }
-    },
-    "authenticate": {
-      "description": "Authenticates user",
-      "input": {
-        "type": "object",
-        "properties": {
-          "username": {
-            "type": "string"
-          },
-          "password": {
-            "type": "string"
-          },
-          "token": {
-            "type": "string"
-          }
-        }
-      },
-      "output": {
-        "description": "Auth token and superuser status",
-        "type": "object",
-        "properties": {
-          "token": {
-            "type": "string"
-          },
-          "isSu": {
-            "type": "boolean"
-          }
-        }
-      }
+      "description": "Close valve 4"
     }
   }
 }
