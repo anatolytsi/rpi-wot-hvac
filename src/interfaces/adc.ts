@@ -1,5 +1,5 @@
 import {AdcConfigs, AdcTypes, Ads1115_t} from './types';
-import {Ads1115} from '../peripherals/ads1115';
+import {Ads1115, Ads1115Gain} from '../peripherals/ads1115';
 
 let adcConfigs: AdcConfigs[] = [];
 let adcInstances: AdcIf[] = [];
@@ -30,6 +30,14 @@ export class AdcIf {
         }
     }
 
+    get gain() {
+        return this.adc.gain;
+    }
+
+    set gain(gain: Ads1115Gain) {
+        this.adc.gain = gain;
+    }
+
     async read(channel: number = 0): Promise<number> {
         if (this.type === Ads1115_t) {
             if (!this.init) {
@@ -37,6 +45,17 @@ export class AdcIf {
                 this.init = true;
             }
             return await this.adc.read(channel);
+        }
+        throw Error('Incorrect ADC');
+    }
+
+    async readVoltage(channel: number = 0): Promise<number> {
+        if (this.type === Ads1115_t) {
+            if (!this.init) {
+                await this.adc.init();
+                this.init = true;
+            }
+            return await this.adc.readVoltage(channel);
         }
         throw Error('Incorrect ADC');
     }
