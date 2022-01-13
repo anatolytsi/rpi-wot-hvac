@@ -16,28 +16,28 @@
     "modeA": "INPUT_PULLUP",
     "modeB": "OUTPUT",
     "valve1": {
-      "openPin": 8,
-      "closePin": 9,
-      "openedSwPin": 0,
-      "closedSwPin": 1
+      "openPin": 15,
+      "closePin": 14,
+      "openedSwPin": 6,
+      "closedSwPin": 7
     },
     "valve2": {
-      "openPin": 10,
-      "closePin": 11,
-      "openedSwPin": 2,
-      "closedSwPin": 3
-    },
-    "valve3": {
-      "openPin": 12,
-      "closePin": 13,
+      "openPin": 13,
+      "closePin": 12,
       "openedSwPin": 4,
       "closedSwPin": 5
     },
+    "valve3": {
+      "openPin": 11,
+      "closePin": 10,
+      "openedSwPin": 2,
+      "closedSwPin": 3
+    },
     "valve4": {
-      "openPin": 14,
-      "closePin": 15,
-      "openedSwPin": 6,
-      "closedSwPin": 7
+      "openPin": 9,
+      "closePin": 8,
+      "openedSwPin": 0,
+      "closedSwPin": 1
     }
   }
 }
