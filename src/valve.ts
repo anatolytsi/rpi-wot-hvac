@@ -38,6 +38,8 @@ export class Valve {
         this.closePin = pins.closePin;
         this.openedPin = pins.openedSwPin;
         this.closedPin = pins.closedSwPin;
+        this.gpio.pins[this.openPin].write(1);
+        this.gpio.pins[this.closePin].write(1);
     }
 
     open() {
@@ -45,13 +47,13 @@ export class Valve {
         this.isOpened().then(value => {
             if (value) return;
             this.working = true;
-            this.gpio.pins[this.closePin].write(0);
-            this.gpio.pins[this.openPin].write(1);
+            this.gpio.pins[this.closePin].write(1);
+            this.gpio.pins[this.openPin].write(0);
             let openTimer = setInterval(() => {
                 this.isOpened().then(async (value: boolean) => {
                     if (value) {
                         this.opened = true;
-                        this.gpio.pins[this.openPin].write(0);
+                        this.gpio.pins[this.openPin].write(1);
                         await delay(500);
                         this.working = false;
                         clearInterval(openTimer);
@@ -59,7 +61,7 @@ export class Valve {
                     this.timeoutCounter++;
                     if (this.refreshTime * this.timeoutCounter === this.timeoutTime) {
                         this.opened = true;
-                        this.gpio.pins[this.openPin].write(0);
+                        this.gpio.pins[this.openPin].write(1);
                         this.working = false;
                         clearInterval(openTimer);
                         throw Error(`Pin ${this.openedPin} did not signal "opened" state within ${this.timeoutTime} ms`);
@@ -74,21 +76,21 @@ export class Valve {
         this.isClosed().then(value => {
             if (value) return;
             this.working = true;
-            this.gpio.pins[this.closePin].write(1);
-            this.gpio.pins[this.openPin].write(0);
+            this.gpio.pins[this.closePin].write(0);
+            this.gpio.pins[this.openPin].write(1);
             let closeTimer = setInterval(() => {
                 this.isClosed().then(async (value: boolean) => {
                     if (value) {
                         this.opened = false;
-                        this.gpio.pins[this.closePin].write(0);
-                        await delay(500);
+                        this.gpio.pins[this.closePin].write(1);
+                        await delay(1000);
                         this.working = false;
                         clearInterval(closeTimer);
                     }
                     this.timeoutCounter++;
                     if (this.refreshTime * this.timeoutCounter === this.timeoutTime) {
                         this.opened = false;
-                        this.gpio.pins[this.closePin].write(0);
+                        this.gpio.pins[this.closePin].write(1);
                         this.working = false;
                         clearInterval(closeTimer);
                         throw Error(`Pin ${this.closedPin} did not signal "closed" state within ${this.timeoutTime} ms`);
