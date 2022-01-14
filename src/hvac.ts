@@ -165,5 +165,9 @@ export class Hvac {
         this.valve2 = new Valve(conf.valves.valve2, gpioConfig);
         this.valve3 = new Valve(conf.valves.valve3, gpioConfig);
         this.valve4 = new Valve(conf.valves.valve4, gpioConfig);
+        this.valve1.isOpened();
+        this.valve2.isOpened();
+        this.valve3.isOpened();
+        this.valve4.isOpened();
     }
 }
