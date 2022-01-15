@@ -18,6 +18,7 @@
   "homepage": "https://github.com/anatolytsi/rpi-wot-hvac#readme",
   "dependencies": {
     "@node-wot/binding-http": "^0.7.8",
+    "@node-wot/binding-websockets": "^0.7.8",
     "@node-wot/core": "^0.7.8",
     "ads1115": "^1.2.0",
     "crypto": "^1.0.1",
