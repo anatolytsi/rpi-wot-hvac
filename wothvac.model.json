@@ -62,6 +62,22 @@
     "valveOpened4": {
       "description": "Check if valve 4 is opened",
       "type": "boolean"
+    },
+    "valveActivated1": {
+      "description": "Check if valve 1 is activated",
+      "type": "boolean"
+    },
+    "valveActivated2": {
+      "description": "Check if valve 2 is activated",
+      "type": "boolean"
+    },
+    "valveActivated3": {
+      "description": "Check if valve 3 is activated",
+      "type": "boolean"
+    },
+    "valveActivated4": {
+      "description": "Check if valve 4 is activated",
+      "type": "boolean"
     }
   },
   "actions": {
