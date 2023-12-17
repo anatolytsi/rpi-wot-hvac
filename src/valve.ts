@@ -7,12 +7,14 @@ interface ValvePins {
     closePin: number;
     openedSwPin: number;
     closedSwPin: number;
+    activated: boolean;
 }
 
 let usedPins: number[] = [];
 
 export class Valve {
     public opened: boolean;
+    public activated: boolean;
     private gpio: GpioIf;
     private openPin: number;
     private closePin: number;
@@ -29,6 +31,7 @@ export class Valve {
         this.timeoutCounter = 0;
         this.opened = false;
         this.working = false;
+        this.activated = pins.activated;
         this.gpio = initGpio(gpioConfig);
         let pinsArr = Object.values(pins);
         const intersection = pinsArr.filter(value => usedPins.includes(value));
@@ -43,6 +46,7 @@ export class Valve {
     }
 
     open() {
+        if (!this.activated) return;
         if (this.opened || this.working) return;
         this.isOpened().then(value => {
             if (value) return;
@@ -50,12 +54,22 @@ export class Valve {
             this.gpio.pins[this.closePin].write(1);
             this.gpio.pins[this.openPin].write(0);
             let openTimer = setInterval(() => {
+                if (!this.activated)
+                {
+                    this.opened = false;
+                    this.working = false;
+                    this.timeoutCounter = 0;
+                    clearInterval(openTimer);
+                    console.log(`Valve was deactivated during opening`);
+                    return;
+                }
                 this.isOpened().then(async (value: boolean) => {
                     if (value) {
                         this.opened = true;
                         this.gpio.pins[this.openPin].write(1);
                         await delay(500);
                         this.working = false;
+                        this.timeoutCounter = 0;
                         clearInterval(openTimer);
                     }
                     this.timeoutCounter++;
@@ -72,6 +86,7 @@ export class Valve {
     }
 
     close() {
+        if (!this.activated) return;
         if (!this.opened || this.working) return;
         this.isClosed().then(value => {
             if (value) return;
@@ -79,12 +94,22 @@ export class Valve {
             this.gpio.pins[this.closePin].write(0);
             this.gpio.pins[this.openPin].write(1);
             let closeTimer = setInterval(() => {
+                if (!this.activated)
+                {
+                    this.opened = false;
+                    this.working = false;
+                    this.timeoutCounter = 0;
+                    clearInterval(closeTimer);
+                    console.log(`Valve was deactivated during closing`);
+                    return;
+                }
                 this.isClosed().then(async (value: boolean) => {
                     if (value) {
                         this.opened = false;
                         this.gpio.pins[this.closePin].write(1);
                         await delay(1000);
                         this.working = false;
+                        this.timeoutCounter = 0;
                         clearInterval(closeTimer);
                     }
                     this.timeoutCounter++;

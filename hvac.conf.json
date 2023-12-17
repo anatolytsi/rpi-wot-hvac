@@ -19,25 +19,29 @@
       "openPin": 15,
       "closePin": 14,
       "openedSwPin": 6,
-      "closedSwPin": 7
+      "closedSwPin": 7,
+      "activated": true
     },
     "valve2": {
       "openPin": 13,
       "closePin": 12,
       "openedSwPin": 4,
-      "closedSwPin": 5
+      "closedSwPin": 5,
+      "activated": true
     },
     "valve3": {
       "openPin": 11,
       "closePin": 10,
       "openedSwPin": 2,
-      "closedSwPin": 3
+      "closedSwPin": 3,
+      "activated": true
     },
     "valve4": {
       "openPin": 9,
       "closePin": 8,
       "openedSwPin": 0,
-      "closedSwPin": 1
+      "closedSwPin": 1,
+      "activated": true
     }
   }
 }

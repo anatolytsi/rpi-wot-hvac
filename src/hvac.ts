@@ -97,19 +97,25 @@ export class Hvac {
     }
 
     private async commonCycle() {
-        if (this.temperatureHe1.temperature >= (this.temperatureFeed + this.hysteresis)) {
-            console.log(`Feed t ${this.temperatureHe1.temperature}ºC > ${this.temperatureFeed + this.hysteresis}ºC, closing valve 1`)
-            this.valve1.close();
-        } else if (this.temperatureHe1.temperature < this.temperatureFeed - this.hysteresis) {
-            console.log(`Feed t ${this.temperatureHe1.temperature}ºC < ${this.temperatureFeed + this.hysteresis}ºC, openning valve 1`)
-            this.valve1.open();
+        if (this.valve1.activated)
+        {
+            if (this.temperatureHe1.temperature >= (this.temperatureFeed + this.hysteresis)) {
+                console.log(`Feed t ${this.temperatureHe1.temperature}ºC > ${this.temperatureFeed + this.hysteresis}ºC, closing valve 1`)
+                this.valve1.close();
+            } else if (this.temperatureHe1.temperature < this.temperatureFeed - this.hysteresis) {
+                console.log(`Feed t ${this.temperatureHe1.temperature}ºC < ${this.temperatureFeed + this.hysteresis}ºC, openning valve 1`)
+                this.valve1.open();
+            }
         }
-        if (this.temperatureHe2.temperature >= (this.temperatureFeed + this.hysteresis)) {
-            console.log(`Feed t ${this.temperatureHe2.temperature}ºC > ${this.temperatureFeed + this.hysteresis}ºC, closing valve 2`)
-            this.valve2.close();
-        } else if (this.temperatureHe2.temperature < this.temperatureFeed - this.hysteresis) {
-            console.log(`Feed t ${this.temperatureHe2.temperature}ºC < ${this.temperatureFeed + this.hysteresis}ºC, openning valve 2`)
-            this.valve2.open();
+        if (this.valve2.activated)
+        {
+            if (this.temperatureHe2.temperature >= (this.temperatureFeed + this.hysteresis)) {
+                console.log(`Feed t ${this.temperatureHe2.temperature}ºC > ${this.temperatureFeed + this.hysteresis}ºC, closing valve 2`)
+                this.valve2.close();
+            } else if (this.temperatureHe2.temperature < this.temperatureFeed - this.hysteresis) {
+                console.log(`Feed t ${this.temperatureHe2.temperature}ºC < ${this.temperatureFeed + this.hysteresis}ºC, openning valve 2`)
+                this.valve2.open();
+            }
         }
     }
 
@@ -117,12 +123,15 @@ export class Hvac {
         console.log('Executing "auto summer" logic');
         this.commonCycle();
         this.valve4.open();
-        if (this.temperatureHe3.temperature >= (this.temperatureFeed + this.hysteresis)) {
-            console.log(`Feed t ${this.temperatureHe3.temperature}ºC > ${this.temperatureFeed + this.hysteresis}ºC, closing valve 3`)
-            this.valve3.close();
-        } else if (this.temperatureHe3.temperature < this.temperatureFeed - this.hysteresis) {
-            console.log(`Feed t ${this.temperatureHe3.temperature}ºC < ${this.temperatureFeed + this.hysteresis}ºC, openning valve 3`)
-            this.valve3.open();
+        if (this.valve3.activated)
+        {
+            if (this.temperatureHe3.temperature >= (this.temperatureFeed + this.hysteresis)) {
+                console.log(`Feed t ${this.temperatureHe3.temperature}ºC > ${this.temperatureFeed + this.hysteresis}ºC, closing valve 3`)
+                this.valve3.close();
+            } else if (this.temperatureHe3.temperature < this.temperatureFeed - this.hysteresis) {
+                console.log(`Feed t ${this.temperatureHe3.temperature}ºC < ${this.temperatureFeed + this.hysteresis}ºC, openning valve 3`)
+                this.valve3.open();
+            }
         }
     }
 
@@ -130,12 +139,15 @@ export class Hvac {
         console.log('Executing "auto winter" logic');
         this.commonCycle();
         this.valve3.open();
-        if (this.temperatureHe3.temperature >= (this.temperatureFeed + this.hysteresis)) {
-            console.log(`Feed t ${this.temperatureHe3.temperature}ºC > ${this.temperatureFeed + this.hysteresis}ºC, openning valve 4`)
-            this.valve4.open();
-        } else if (this.temperatureHe3.temperature < this.temperatureFeed - this.hysteresis) {
-            console.log(`Feed t ${this.temperatureHe3.temperature}ºC < ${this.temperatureFeed + this.hysteresis}ºC, closing valve 4`)
-            this.valve4.close();
+        if (this.valve4.activated)
+        {
+            if (this.temperatureHe3.temperature >= (this.temperatureFeed + this.hysteresis)) {
+                console.log(`Feed t ${this.temperatureHe3.temperature}ºC > ${this.temperatureFeed + this.hysteresis}ºC, openning valve 4`)
+                this.valve4.open();
+            } else if (this.temperatureHe3.temperature < this.temperatureFeed - this.hysteresis) {
+                console.log(`Feed t ${this.temperatureHe3.temperature}ºC < ${this.temperatureFeed + this.hysteresis}ºC, closing valve 4`)
+                this.valve4.close();
+            }
         }
     }
 

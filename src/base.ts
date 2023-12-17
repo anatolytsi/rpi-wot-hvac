@@ -57,6 +57,30 @@ export class WotHvac {
         this.thing.setPropertyReadHandler('temperatureHe3', async () => {
             return this.hvac.temperatureHe3.temperature;
         });
+        this.thing.setPropertyReadHandler('valveActivated1', async () => {
+            return this.hvac.valve1.activated;
+        });
+        this.thing.setPropertyWriteHandler('valveActivated1', async (activated) => {
+            this.hvac.valve1.activated  = activated;
+        });
+        this.thing.setPropertyReadHandler('valveActivated2', async () => {
+            return this.hvac.valve2.activated;
+        });
+        this.thing.setPropertyWriteHandler('valveActivated2', async (activated) => {
+            this.hvac.valve2.activated  = activated;
+        });
+        this.thing.setPropertyReadHandler('valveActivated3', async () => {
+            return this.hvac.valve3.activated;
+        });
+        this.thing.setPropertyWriteHandler('valveActivated3', async (activated) => {
+            this.hvac.valve3.activated  = activated;
+        });
+        this.thing.setPropertyReadHandler('valveActivated4', async () => {
+            return this.hvac.valve4.activated;
+        });
+        this.thing.setPropertyWriteHandler('valveActivated4', async (activated) => {
+            this.hvac.valve4.activated  = activated;
+        });
         this.thing.setPropertyReadHandler('valveOpened1', async () => {
             return this.hvac.valve1.opened;
         });
